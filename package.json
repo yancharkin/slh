@@ -1,0 +1,40 @@
+{
+  "name": "SLH",
+  "displayName": "SLH",
+  "version": "0.0.1",
+  "description": "Songwriter's Little Helper",
+  "repository": "https://github.com/yancharkin/SLH",
+  "main": "www/index.html",
+  "author": "Ivan Yancharkin",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build-linux": "yarn run webpack && mkdir -p dist/linux/package.nw && cp -r node_modules/nw/nwjs/* dist/linux && cp -r www dist/linux/package.nw && cp package.json dist/linux/package.nw && mv dist/linux/nw dist/linux/slh",
+    "build-android": "yarn run webpack && yarn run cordova build android && mkdir -p dist/android && cp platforms/android/app/build/outputs/apk/debug/app-debug.apk dist/android/slh.apk"
+  },
+  "devDependencies": {
+    "babel-core": "6",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "copy-webpack-plugin": "^4.5.2",
+    "cordova": "^8.0.0",
+    "nw": "^0.32.4",
+    "webpack": "^4.16.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  },
+  "dependencies": {
+    "MIDI.js": "git+ssh://git@github.com/mudcube/MIDI.js.git",
+    "cordova-android": "^7.1.1",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "tonal": "^1.1.3"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  }
+}
