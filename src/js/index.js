@@ -25,6 +25,10 @@ var repeatsSelector = document.getElementById("repeats");
 var playRhythmButton = document.getElementById("play-rhythm");
 var randomizeTrButton = document.getElementById("randomize-tr");
 var randomizeAllButton = document.getElementById("randomize-all");
+var toggleHmButton = document.getElementById("toggle-hm");
+var bodyHm = document.getElementById("body-hm");
+var toggleTrButton = document.getElementById("toggle-tr");
+var bodyTr = document.getElementById("body-tr");
 
 noteSelector.addEventListener("change", noteSelected);
 accidentalSelector.addEventListener("change", accidentalSelected);
@@ -34,6 +38,8 @@ playRhythmButton.addEventListener("click", playRhythmClicked);
 randomizeHmButton.addEventListener("click", randomizeHm);
 randomizeTrButton.addEventListener("click", randomizeTr);
 randomizeAllButton.addEventListener("click", randomizeAll);
+toggleHmButton.addEventListener("click", toggleSection);
+toggleTrButton.addEventListener("click", toggleSection);
 
 tonic = tonic + accidental + baseOctave;
 var tonalScale = scale(scaleName).map(transpose(tonic));
@@ -89,10 +95,12 @@ function renderNoteNames(tonalScale) {
             let accidentals = note.slice(1, -1);
             noteName = note.replace(accidentals, utils.accidentalsList[accidentals]);
         }
-        let newSpan = document.createElement("span");
-        newSpan.setAttribute("class", "note-span");
-        newSpan.innerHTML = noteName.slice(0, -1);
-        namesDiv.appendChild(newSpan);
+        let newButton = document.createElement("button");
+        newButton.setAttribute("class", "note-button");
+        newButton.setAttribute("value", note);
+        newButton.addEventListener("click", noteClicked);
+        newButton.innerHTML = noteName.slice(0, -1);
+        namesDiv.appendChild(newButton);
     });
 }
 
@@ -195,6 +203,13 @@ function playScaleClicked() {
     //playback.playScale(tonalScale);
 }
 
+function noteClicked(button) {
+    let note = button.target.value;
+    midiPlayback.playNote(note, 127);
+    // OR
+    //playback.playSound("piano", note, 0);
+}
+
 function chordClicked(button) {
     let chord = button.target.value;
     let notes = Chord.notes(chord);
@@ -218,6 +233,23 @@ function playRhythmClicked() {
     playback.playRhythm(rhythm, tempo, repeats);
 }
 
+function toggleSection(button) {
+    let sectionBody = null;
+    if (button.target.id == "toggle-hm") {
+        sectionBody = bodyHm;
+    }
+    else {
+        sectionBody = bodyTr;
+    }
+
+    if ((sectionBody.style.display == "block") || (sectionBody.style.display == "")) {
+        sectionBody.style.display = "none";
+    }
+    else {
+        sectionBody.style.display = "block";
+    }
+}
+
 function randomizeHm() {
     randomizeSelction(noteSelector);
     randomizeSelction(accidentalSelector);
@@ -230,11 +262,13 @@ function randomizeHm() {
     tonalScale = scale(scaleName).map(transpose(tonic));
 
     showResult();
+    bodyHm.style.display = "block";
 }
 
 function randomizeTr() {
     randomizeSelction(tempoSelector);
     randomizeSelction(rhythmSelector);
+    bodyTr.style.display = "block";
 }
 
 function randomizeAll() {

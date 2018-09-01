@@ -12,46 +12,57 @@
 </head>
 
 <body>
-    <h1>Songwriter's Little Helper</h1>
-    <div>
-        <button id="randomize-all">Randomize all</button>
-    </div>
-    <section id="melody-harmony">
-        <h2>Melody and Harmony</h2>
-        <div>
-            <button id="randomize-hm">Randomize</button>
+    <header class="headers" id="header-main">
+        <h1>Songwriter's Little Helper</h1>
+        <button class="randomize-button" id="randomize-all">Randomize all</button>
+    </header>
+    <section id="harmony-melody">
+        <div class="headers" id="header-hm">
+            <button id="toggle-hm" class="toggle-button">V</button>
+            <h2>Melody and Harmony</h2>
+            <button class="randomize-button" id="randomize-hm">Randomize</button>
         </div>
-        <div id="selectors">
-            <select id="noteselector"></select>
-            <select id="accidentalselector"></select>
-            <select id="scaleselector"></select>
-            <button id="play-scale">Play</button>
-        </div>
-        <h3>Notes in scale:</h3>
-        <div id="names"></div>
-        <h3>Chords</h3>
-        <div id="chords"></div>
-        <div id="more-chords"></div>
-        <div id="chord">
-            <span id="chord-label">Chord:</span>
-            <span id="chord-name"></span>
-            <span id="chord-notes"></span>
-        </div>
-        <div id="midi-input">
-            <span id="midi-label">MIDI Input:</span>
-            <span id="midi-notes"></span>
+        <div id="body-hm">
+            <div id="selectors-hm" class="selectors">
+                <select id="noteselector"></select>
+                <select id="accidentalselector"></select>
+                <select id="scaleselector"></select>
+                <button id="play-scale">Play</button>
+            </div>
+            <h3>Notes in scale:</h3>
+            <div id="names"></div>
+            <h3>Chords:</h3>
+            <div id="chords"></div>
+            <div id="more-chords"></div>
+            <div id="input-monitor">
+                <div id="chord">
+                    <span id="chord-label">Chord:</span>
+                    <span id="chord-name"></span>
+                    <span id="chord-notes"></span>
+                </div>
+                <div id="midi-input">
+                    <span id="midi-label">MIDI Input:</span>
+                    <span id="midi-notes"></span>
+                </div>
+            </div>
         </div>
     </section>
 
     <section id="tempo-rhythm">
-        <h2>Tempo and Rhythm</h2>
-        <div>
-            <button id="randomize-tr">Randomize</button>
+        <div class="headers" id="header-tr">
+            <button id="toggle-tr" class="toggle-button">V</button>
+            <h2>Tempo and Rhythm</h2>
+            <button class="randomize-button" id="randomize-tr">Randomize</button>
         </div>
-        <select id="tempo"></select>
-        <select id="rhythm"></select>
-        <select id="repeats"></select>
-        <button id="play-rhythm">Play</button>
+        <div id="body-tr">
+            <div id="selectors-tr" class="selectors">
+                <select id="tempo"></select>
+                <select id="rhythm"></select>
+                <select id="repeats"></select>
+                <button id="play-rhythm">Play</button>
+            </div>
+        </div>
     </section>
+    <footer></footer>
 </body>
 </html>

@@ -8,7 +8,7 @@ if (navigator.requestMIDIAccess) {
     }).then(onMIDISuccess, onMIDIFailure);
 } else {
     //alert("No MIDI support in your browser.");
-    midiNotes.innerHTML = "Not supported"; 
+    midiNotes.innerHTML = "Not supported";
 }
 
 MIDI.loadPlugin({
@@ -79,6 +79,13 @@ function hideNote(note) {
         }
     }
     midiNotes.innerHTML = newStr;
+}
+
+export function playNote(note, volume) {
+    var midiNote = Note.midi(note);
+    var noteLength = 1;
+    MIDI.noteOn(0, midiNote, volume, 0);
+    MIDI.noteOff(0, midiNote,  noteLength);
 }
 
 export function playScale(scale, volume) {
