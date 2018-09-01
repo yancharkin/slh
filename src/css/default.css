@@ -1,0 +1,271 @@
+@font-face  {
+    font-family: bravura-text;
+    src: url("../assets/fonts/bravura-text.woff");
+}
+
+* {
+    font-family: "bravura-text";
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: #e0e0e0;
+}
+
+body {
+    background-color: #fff;
+    font-size: 16px;
+    width: 60%;
+    margin-left: 20%;
+}
+
+h1, h2 {
+    display: inline-block;
+}
+
+h1 {
+    font-size: 1.3em;
+    margin-left: 0.5em;
+}
+
+h2 {
+    font-size: 1.2em;
+}
+
+h3 {
+    font-size: 1.1em;
+    padding-top: 1em;
+    padding-bottom: 0.2em;
+}
+
+button, span, option, select {
+    font-size: 1em;
+}
+
+select, button {
+    height: 2.2em;
+    border-radius: 0.5em;
+    padding: 0 0.5em;
+    margin: 0.2em 0;
+    box-shadow: none;
+    background-color: #fff;
+    border: 0.1em solid #000;
+}
+
+select:hover, select:active, button:hover, button:active {
+    background-color: #e0e0e0;
+}
+
+select, button {
+    color: #000;
+}
+
+.headers {
+    height: 2.6em;
+}
+
+#header-main {
+    color: #fff;
+    background-color: #000;
+}
+
+#header-hm {
+    color: #fff;
+    background-color: #666;
+}
+
+#header-tr {
+    color: #fff;
+    background-color: #888;
+}
+
+.randomize-button {
+    border: none;
+    color: #000;
+    background-color: #e0e0e0;
+    display: inline-block;
+    width: 8.5em;
+    margin-right: 0.2em;
+    float: right;
+}
+
+.randomize-button:hover, .randomize-button:active {
+    background-color: #fff;
+}
+
+.toggle-button {
+    width: 3em;
+    border: none;
+    color: #fff;
+    background: none;
+}
+
+.toggle-button:hover, .toggle-button:active {
+    background: none;
+}
+
+#body-hm, #body-tr {
+    display: block;
+}
+
+.selectors {
+    padding: 0.5em 0;
+}
+
+#selectors-hm, #selectors-tr, .note-span, #names, #chords, #more-chords, h3 {
+    text-align: center;
+}
+
+/*
+#more-chords {
+    height: 12em;
+    overflow: auto;
+}
+*/
+
+#noteselector, #tempo, #accidentalselector, #rhythm {
+    width: 19%;
+}
+
+#scaleselector, #repeats {
+    width: 40%;
+}
+
+.note-button, .chord-button {
+    display: inline-block;
+    margin: 0.1em;
+    border-radius: 0.5em;
+}
+
+.note-button {
+    border: 0.1em solid #000;
+    width: 4em;
+    color: #000;
+    background-color: #fff;
+}
+
+.chord-button {
+    border: none;
+    color: black;
+}
+
+.note-button:hover, .note-button:active, .chord-button:hover, .chord-button:active {
+    color: black;
+    background-color: lightgrey;
+}
+
+.chord-button-0 {
+    background-color: #ff0000;
+    color: white;
+}
+
+.chord-button-1 {
+    background-color: #ff8000;
+    color: white;
+}
+
+.chord-button-2 {
+    background-color: #ffd900;
+}
+
+.chord-button-3 {
+    background-color: #e0ff00;
+}
+
+.chord-button-4 {
+    background-color: #2fff00;
+}
+
+.chord-button-5 {
+    background-color: #00ff9f;
+}
+
+.chord-button-6 {
+    background-color: #00ccff;
+}
+
+.chord-button-7 {
+    background-color: #0035ff;
+    color: white;
+}
+
+.chord-button-8 {
+    background-color: #7200ff;
+    color: white;
+}
+
+.chord-button-9 {
+    background-color: #a400ff;
+    color: white;
+}
+
+.chord-button-10 {
+    background-color: #ee00ff;
+}
+
+.chord-button-11 {
+    background-color: #ff009e;
+    color: white;
+}
+
+.chord-button-12 {
+    background-color: #000000;
+    color: white;
+}
+
+#input-monitor {
+    padding-top: 0.5em;
+    padding-bottom: 2em;
+}
+
+#chord {
+    display: grid;
+    grid-template-columns: 30% 35% auto;
+    grid-gap: 0.2em;
+}
+
+#midi-input {
+    display: grid;
+    grid-template-columns: 30% auto;
+    grid-gap: 0.2em;
+    margin-top: 0.2em;
+}
+
+#chord-label, #chord-name, #chord-notes, #midi-label, #midi-notes {
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+    font-weight: bold;
+    background-color: #e0e0e0;
+}
+
+#chord-label, #midi-label {
+    padding-left: 0.5em;
+}
+
+#chord-label, #midi-label, #chord-name, #chord-notes, #midi-notes {
+    border-style: solid;
+    border-radius: 0.5em;
+    border-width: 0.1em;
+    border-color: #000;
+}
+
+#chord-name, #chord-notes, #midi-notes {
+    text-align: center;
+}
+
+@media screen and (max-device-width: 1024), screen and (max-width: 1024px) {
+    body {
+        /* android
+        font-size: 12px;
+        */
+        /* mobile web
+        */
+        font-size: 32px;
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media screen and (min-device-width: 1920px), screen and (min-width: 1920px) {
+}
