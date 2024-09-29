@@ -2,270 +2,353 @@
     font-family: bravura-text;
     src: url("../assets/fonts/bravura-text.woff");
 }
+:root {
+    --ds-color1: white;
+    --ds-background1: #2d2d33;
+    --ds-background2: #1b1b20;
+    --ds-background3: #333;
+    --ds-header-main-background: #656bff;
+    --ds-header-hm-background: #7781dc;
+    --ds-header-tr-background: #949ace;
+    --ds-play-icon: url('../assets/images/play-white.svg');
 
+    --ls-color1: black;
+    --ls-color2: white;
+    --ls-background1: #e0e0e0;
+    --ls-background2: white;
+    --ls-header-main-background: black;
+    --ls-header-hm-background: #666;
+    --ls-header-tr-background: #888;
+    --ls-play-icon: url('../assets/images/play-black.svg');
+}
+html[color-scheme="light"] {
+    --color1: var(--ls-color1);
+    --color2: var(--ls-color2);
+    --background-color1: var(--ls-background1);
+    --background-color2: var(--ls-background2);
+    --background-color3: var(--ls-background1);
+    --background-color-hmain: var(--ls-header-main-background);
+    --background-color-hm: var(--ls-header-hm-background);
+    --background-color-tr: var(--ls-header-tr-background);
+    --play-icon: var(--ls-play-icon);
+}
 * {
     font-family: "bravura-text";
     margin: 0;
     padding: 0;
+    word-spacing: .3em;
 }
-
 html {
-    background-color: #e0e0e0;
+    background-color: var(--background-color1, var(--ds-background1));
 }
-
 body {
-    background-color: #fff;
-    font-size: 16px;
-    width: 60%;
-    margin-left: 20%;
+    background-color: var(--background-color1, var(--ds-background1));
+    color: var(--color1, var(--ds-color1));
 }
-
+header {
+    -webkit-app-region: drag;
+    position: fixed;
+    left: env(titlebar-area-x, 0);
+    top: env(titlebar-area-y, 0);
+    width: env(titlebar-area-width, 100%);
+    height: env(titlebar-area-height, 2.6em);
+    z-index: 100;
+}
+header button, header select {
+    -webkit-app-region: no-drag;
+}
+#main {
+    padding-top: env(titlebar-area-height, 2.6em);
+}
 h1, h2 {
     display: inline-block;
+    color: var(--color2, var(--ds-color1));
 }
-
 h1 {
     font-size: 1.3em;
-    margin-left: 0.5em;
+    font-size: 1em;
+    height: env(titlebar-area-height, 2.6em);
+    line-height: env(titlebar-area-height, 2.6em);
+    vertical-align: top;
+    width: 100%;
+    text-align: center;
 }
-
 h2 {
     font-size: 1.2em;
+    font-size: 1em;
+    height: 2.6em;
+    line-height: 2.6em;
 }
-
 h3 {
     font-size: 1.1em;
+    font-size: 1em;
     padding-top: 1em;
     padding-bottom: 0.2em;
 }
-
+select {
+    text-align: center;
+}
 button, span, option, select {
     font-size: 1em;
 }
-
-select, button {
-    height: 2.2em;
-    border-radius: 0.5em;
+button, select {
     padding: 0 0.5em;
     margin: 0.2em 0;
-    box-shadow: none;
-    background-color: #fff;
-    border: 0.1em solid #000;
+    height: 2.2em;
+    border: 1px solid black;
+    border-radius: 0.5em;
 }
-
-select:hover, select:active, button:hover, button:active {
-    background-color: #e0e0e0;
+button, select, .note-button {
+    background-color: var(--background-color2, var(--ds-background2));
+    color: var(--color1, var(--ds-color1));
 }
-
-select, button {
-    color: #000;
+button:not(.toggle-button):not(.randomize-button):not(#controls button),
+select:not(#langselector), span:not(#lang) {
+    box-shadow: rgba(0, 0, 0, 0.35) 1px 1px 5px;
 }
-
-.headers {
-    height: 2.6em;
+button:focus, select:focus {
+    outline: none;
 }
-
-#header-main {
-    color: #fff;
-    background-color: #000;
+select:active, select:focus, button:not(.toggle-button):not(.randomize-button):hover:not([disabled]),
+button:not(.toggle-button):not(.randomize-button):focus {
+    color: black;
+    background-color: lightgrey;
+    border: 1px solid black;
 }
-
-#header-hm {
-    color: #fff;
-    background-color: #666;
+button:not(.toggle-button):not(.note-button):not(.chord-button):not(.randomize-button):hover:not([disabled]),
+button:not(.toggle-button):not(.note-button):not(.chord-button):not(.randomize-button):focus,
+select:focus, select:active, select:hover {
+    color: var(--color1, var(--ds-color1));
+    background-color: var(--background-color3, var(--ds-background3));
 }
-
-#header-tr {
-    color: #fff;
-    background-color: #888;
+button:disabled {
+    filter: brightness(60%);
 }
-
-.randomize-button {
+span#lang, button#toggle-color-scheme {
+    margin-top: 0;
+    height: 100%;
+    width: 2em;
     border: none;
-    color: #000;
-    background-color: #e0e0e0;
+    background: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    vertical-align: top;
+}
+button#toggle-color-scheme:hover {
+    background-size: cover;
+}
+span#lang {
     display: inline-block;
-    width: 8.5em;
-    margin-right: 0.2em;
-    float: right;
 }
-
-.randomize-button:hover, .randomize-button:active {
-    background-color: #fff;
+#langselector {
+    opacity: 0;
+    position: absolute;
+    margin-top: 0;
+    font-size: 1em;
+    font-weight: bold;
+    height: 100%;
+    width: 2em;
+    background: none;
+    vertical-align: top;
 }
-
+option {
+    background-color: var(--background-color2, var(--ds-background2));
+    color: var(--color1, var(--ds-color1));
+}
+[lang] {
+    display: none
+}
+[lang="en"] {
+    display: inline-block;
+}
+h3[lang="en"] {
+    display: block;
+}
+span#lang {
+    background-image: url('../assets/images/en.svg');
+}
+button#toggle-color-scheme {
+    background-image: url('../assets/images/dark.svg');
+}
+#header-main {
+    color: var(--color1, var(--ds-color1));
+    background-color: var(--background-color-hmain, var(--ds-header-main-background));
+}
+#header-hm {
+    color: var(--color1, var(--ds-color1));
+    background-color: var(--background-color-hm, var(--ds-header-hm-background));
+}
+#header-tr {
+    color: var(--color1, var(--ds-color1));
+    background-color: var(--background-color-tr, var(--ds-header-tr-background));
+}
+#controls {
+    position: absolute;
+    display: inline-block;
+    margin-left: 0.3em;
+    height: env(titlebar-area-height, 2.6em);
+}
+.play {
+    width: 2.5em;
+    background-image: var(--play-icon, var(--ds-play-icon));
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    vertical-align: bottom;
+}
+.randomize-button {
+    display: inline-block;
+    width: 2em;
+    height: 2.2em;
+    position: absolute;
+    right: 0.3em;
+    border: none;
+    background: none;
+    background-image: url('../assets/images/dice.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.randomize-button:hover {
+    background-size: cover;
+}
 .toggle-button {
     width: 3em;
+    height: 2.2em;
     border: none;
-    color: #fff;
     background: none;
+    background-image: url('../assets/images/up.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    vertical-align: top;
 }
-
-.toggle-button:hover, .toggle-button:active {
-    background: none;
+.toggle-button:hover {
+    background-size: cover;
 }
-
 #body-hm, #body-tr {
     display: block;
 }
-
 .selectors {
     padding: 0.5em 0;
 }
-
 #selectors-hm, #selectors-tr, .note-span, #names, #chords, #more-chords, h3 {
     text-align: center;
 }
-
-/*
-#more-chords {
-    height: 12em;
-    overflow: auto;
-}
-*/
-
 #noteselector, #tempo, #accidentalselector, #rhythm {
     width: 19%;
 }
-
 #scaleselector, #repeats {
     width: 40%;
 }
-
 .note-button, .chord-button {
     display: inline-block;
     margin: 0.1em;
     border-radius: 0.5em;
 }
-
 .note-button {
-    border: 0.1em solid #000;
+    border: 1px solid black;
     width: 4em;
-    color: #000;
-    background-color: #fff;
 }
-
 .chord-button {
-    border: none;
+    border: 1px solid black;
     color: black;
 }
-
-.note-button:hover, .note-button:active, .chord-button:hover, .chord-button:active {
-    color: black;
-    background-color: lightgrey;
-}
-
 .chord-button-0 {
     background-color: #ff0000;
     color: white;
 }
-
 .chord-button-1 {
     background-color: #ff8000;
     color: white;
 }
-
 .chord-button-2 {
     background-color: #ffd900;
 }
-
 .chord-button-3 {
     background-color: #e0ff00;
 }
-
 .chord-button-4 {
     background-color: #2fff00;
 }
-
 .chord-button-5 {
     background-color: #00ff9f;
 }
-
 .chord-button-6 {
     background-color: #00ccff;
 }
-
 .chord-button-7 {
     background-color: #0035ff;
     color: white;
 }
-
 .chord-button-8 {
     background-color: #7200ff;
     color: white;
 }
-
 .chord-button-9 {
     background-color: #a400ff;
     color: white;
 }
-
 .chord-button-10 {
     background-color: #ee00ff;
 }
-
 .chord-button-11 {
     background-color: #ff009e;
     color: white;
 }
-
 .chord-button-12 {
     background-color: #000000;
     color: white;
 }
-
 #input-monitor {
     padding-top: 0.5em;
     padding-bottom: 2em;
 }
-
 #chord {
     display: grid;
     grid-template-columns: 30% 35% auto;
     grid-gap: 0.2em;
+    padding: 0 0.3em;
 }
-
 #midi-input {
     display: grid;
     grid-template-columns: 30% auto;
     grid-gap: 0.2em;
     margin-top: 0.2em;
+    padding: 0 0.3em;
 }
-
 #chord-label, #chord-name, #chord-notes, #midi-label, #midi-notes {
+    background-color: var(--background-color2, var(--ds-background2));
     padding-top: 0.3em;
     padding-bottom: 0.3em;
     font-weight: bold;
-    background-color: #e0e0e0;
+    text-align: center;
 }
-
 #chord-label, #midi-label {
     padding-left: 0.5em;
 }
-
 #chord-label, #midi-label, #chord-name, #chord-notes, #midi-notes {
     border-style: solid;
     border-radius: 0.5em;
-    border-width: 0.1em;
+    border-width: 1px;
     border-color: #000;
 }
-
 #chord-name, #chord-notes, #midi-notes {
     text-align: center;
 }
-
-@media screen and (max-device-width: 1024), screen and (max-width: 1024px) {
+@media screen and (max-device-width: 800px), screen and (max-width: 800px) {
     body {
-        /* android
-        font-size: 12px;
-        */
-        /* mobile web
-        */
-        font-size: 32px;
-        width: 100%;
-        margin-left: 0;
+        font-size: 3vw;
+    }
+    @media (display-mode: window-controls-overlay) {
+        h1 {
+            margin-left: 5em;
+        }
     }
 }
-
-@media screen and (min-device-width: 1920px), screen and (min-width: 1920px) {
+@media (display-mode: window-controls-overlay) {
+    header {
+        font-size: 18px;
+    }
 }

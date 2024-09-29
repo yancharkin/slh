@@ -1,9 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html color-scheme="dark" lang="en">
 <head>
     <meta charset="utf-8"/>
     <title>Songwriter's Little Helper</title>
+    <meta name="description" content="A simple app that may or may not help you compose music.">
+    <meta name="theme-color" content="#656bff" />
     <link rel="stylesheet" href="css/default.css"/>
+    <script src="js/setup.js"></script>
+    <link rel="icon" type="image/png" href="assets/images/icon.png">
+    <link rel="manifest" href="manifest.json">
     <script type="text/javascript" src="js/Base64.js" defer></script>
     <script type="text/javascript" src="js/Base64binary.js" defer></script>
     <script type="text/javascript" src="js/MIDI.min.js" defer></script>
@@ -12,57 +17,105 @@
 </head>
 
 <body>
-    <header class="headers" id="header-main">
+    <header class="header" id="header-main">
+        <div id="controls">
+            <select id="langselector">
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <!--
+                <option value="he" dir="rtl">עִברִית</option>
+                -->
+                <option value="ka">ქართული</option>
+                <option value="ru">Русский</option>
+                <option value="uk">Українська</option>
+            </select>
+            <span id="lang"></span>
+            <button id="toggle-color-scheme"></button>
+        </div>
         <h1>Songwriter's Little Helper</h1>
-        <button class="randomize-button" id="randomize-all">Randomize all</button>
     </header>
-    <section id="harmony-melody">
-        <div class="headers" id="header-hm">
-            <button id="toggle-hm" class="toggle-button">V</button>
-            <h2>Melody and Harmony</h2>
-            <button class="randomize-button" id="randomize-hm">Randomize</button>
-        </div>
-        <div id="body-hm">
-            <div id="selectors-hm" class="selectors">
-                <select id="noteselector"></select>
-                <select id="accidentalselector"></select>
-                <select id="scaleselector"></select>
-                <button id="play-scale">Play</button>
+    <div id="main">
+        <section id="harmony-melody">
+            <div id="header-hm">
+                <button id="toggle-hm" class="toggle-button"></button>
+                <h2 class="header" lang="en">Melody and Harmony</h2>
+                <h2 class="header" lang="es">Melodía y armonía</h2>
+                <h2 class="header" lang="he">מלודיה והרמוניה</h2>
+                <h2 class="header" lang="ka">მელოდია და ჰარმონია</h2>
+                <h2 class="header" lang="ru">Мелодия и гармония</h2>
+                <h2 class="header" lang="uk">Мелодія та гармонія</h2>
+                <button class="randomize-button" id="randomize-hm"></button>
             </div>
-            <h3>Notes in scale:</h3>
-            <div id="names"></div>
-            <h3>Chords:</h3>
-            <div id="chords"></div>
-            <div id="more-chords"></div>
-            <div id="input-monitor">
-                <div id="chord">
-                    <span id="chord-label">Chord:</span>
-                    <span id="chord-name"></span>
-                    <span id="chord-notes"></span>
+            <div id="body-hm">
+                <div id="selectors-hm" class="selectors">
+                    <select id="noteselector"></select>
+                    <select id="accidentalselector"></select>
+                    <select id="scaleselector"></select>
+                    <button class="play" id="play-scale"></button>
                 </div>
-                <div id="midi-input">
-                    <span id="midi-label">MIDI Input:</span>
-                    <span id="midi-notes"></span>
+                <h3 lang="en">Notes in the scale:</h3>
+                <h3 lang="es">Notas en la escala:</h3>
+                <h3 lang="he">:תווים בסולם</h3>
+                <h3 lang="ka">ნოტები მასშტაბში</h3>
+                <h3 lang="ru">Ноты в гамме:</h3>
+                <h3 lang="uk">Ноти в гаммі:</h3>
+                <div id="names"></div>
+                <h3 lang="en">Chords:</h3>
+                <h3 lang="es">Acordes:</h3>
+                <h3 lang="he">:אקורדים</h3>
+                <h3 lang="ka">აკორდები:</h3>
+                <h3 lang="ru">Аккорды:</h3>
+                <h3 lang="uk">Акорди:</h3>
+                <div id="chords"></div>
+                <div id="more-chords"></div>
+                <div id="input-monitor">
+                    <div id="chord">
+                        <span id="chord-label" lang="en">Chord:</span>
+                        <span id="chord-label" lang="es">Acorde:</span>
+                        <span id="chord-label" lang="he">:אקורד</span>
+                        <span id="chord-label" lang="ka">აკორდი:</span>
+                        <span id="chord-label" lang="ru">Аккорд:</span>
+                        <span id="chord-label" lang="uk">Акорд:</span>
+                        <span id="chord-name"></span>
+                        <span id="chord-notes"></span>
+                    </div>
+                    <div id="midi-input">
+                        <span id="midi-label" lang="en">Input:</span>
+                        <span id="midi-label" lang="es">Entrada:</span>
+                        <span id="midi-label" lang="he">:קלט</span>
+                        <span id="midi-label" lang="ka">შეყვანა:</span>
+                        <span id="midi-label" lang="ru">Ввод:</span>
+                        <span id="midi-label" lang="uk">Введення:</span>
+                        <span id="midi-notes"></span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="tempo-rhythm">
-        <div class="headers" id="header-tr">
-            <button id="toggle-tr" class="toggle-button">V</button>
-            <h2>Tempo and Rhythm</h2>
-            <button class="randomize-button" id="randomize-tr">Randomize</button>
-        </div>
-        <div id="body-tr">
-            <div id="selectors-tr" class="selectors">
-                <select id="tempo"></select>
-                <select id="rhythm"></select>
-                <select id="repeats"></select>
-                <button id="play-rhythm">Play</button>
+        </section>
+        <section id="tempo-rhythm">
+            <div id="header-tr">
+                <button id="toggle-tr" class="toggle-button"></button>
+                <h2 class="header" lang="en">Tempo and Rhythm</h2>
+                <h2 class="header" lang="es">Tempo y ritmo</h2>
+                <h2 class="header" lang="ka">ტემპო და რითმული</h2>
+                <h2 class="header" lang="ru">Темп и ритм</h2>
+                <h2 class="header" lang="uk">Темп і ритм</h2>
+                <button class="randomize-button" id="randomize-tr"></button>
             </div>
-        </div>
-    </section>
+            <div id="body-tr">
+                <div id="selectors-tr" class="selectors">
+                    <select id="tempo"></select>
+                    <select id="rhythm"></select>
+                    <select id="repeats"></select>
+                    <button class="play" id="play-rhythm"></button>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("./serviceWorker.js");
+        }
+    </script>
     <footer></footer>
 </body>
 </html>
