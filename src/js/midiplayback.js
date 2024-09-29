@@ -1,6 +1,11 @@
 import { Note } from "tonal";
+import { noteToMidi } from "./note2midi";
 
+var playScaleButton = document.getElementById("play-scale");
 var midiNotes = document.getElementById("midi-notes");
+var notesInScale = document.getElementById("names");
+var noteN = 1;
+var timer;
 
 if (navigator.requestMIDIAccess) {
     navigator.requestMIDIAccess({
@@ -8,7 +13,7 @@ if (navigator.requestMIDIAccess) {
     }).then(onMIDISuccess, onMIDIFailure);
 } else {
     //alert("No MIDI support in your browser.");
-    midiNotes.innerHTML = "Not supported";
+    midiNotes.innerHTML = "MIDI not supported";
 }
 
 MIDI.loadPlugin({
@@ -46,7 +51,7 @@ function onMIDIMessage(event) {
         case 144:
             MIDI.noteOn(0, note, velocity, 0);
             showNote(note);
-             break;
+            break;
         case 128:
             MIDI.noteOff(0, note, 0);
             hideNote(note);
@@ -54,7 +59,7 @@ function onMIDIMessage(event) {
     }
 }
 
-function showNote(note) {
+export function showNote(note) {
     if (midiNotes.innerHTML.length > 0) {
         midiNotes.innerHTML += " - " + Note.fromMidi(note);
     }
@@ -81,6 +86,23 @@ function hideNote(note) {
     midiNotes.innerHTML = newStr;
 }
 
+function animateScale() {
+    return new Promise((resolve) => {
+        timer = setInterval(() => {
+            if (noteN < notesInScale.children.length) {
+                notesInScale.children[noteN].focus();
+            };
+            noteN+=1;
+            if (noteN > notesInScale.children.length) {
+                clearInterval(timer);
+                document.activeElement.blur();
+                noteN = 1;
+                playScaleButton.disabled = false;
+            };
+        }, 500);
+    });
+}
+
 export function playNote(note, volume) {
     var midiNote = Note.midi(note);
     var noteLength = 1;
@@ -88,14 +110,17 @@ export function playNote(note, volume) {
     MIDI.noteOff(0, midiNote,  noteLength);
 }
 
-export function playScale(scale, volume) {
+export async function playScale(scale, volume) {
+    playScaleButton.disabled = true;
     var noteStart = 0.5;
     var noteLength = 0.5;
-    for (let i = 0; i < scale.length; i++) {
+    notesInScale.children[0].focus();
+    for (let i = 0; i < scale.length - 1; i++) {
         let midiNote = Note.midi(scale[i]);
         MIDI.noteOn(0, midiNote, volume, noteStart * i);
         MIDI.noteOff(0, midiNote,  (noteStart * i) + noteLength);
     }
+    await animateScale();
 }
 
 export function playChord(notes, volume) {
@@ -132,3 +157,50 @@ export function playRhythm(rhythm, tempo, repeats) {
         }
     }
 }
+
+function keyboardInput(e){
+    if (e.repeat) return;
+    let midiNote;
+    switch (e.code) {
+        case 'KeyZ': midiNote = Note.midi(noteToMidi['C3']); break;
+        case 'KeyS': midiNote = Note.midi(noteToMidi['C#3']); break;
+        case 'KeyX': midiNote = Note.midi(noteToMidi['D3']); break;
+        case 'KeyD': midiNote = Note.midi(noteToMidi['D#3']); break;
+        case 'KeyC': midiNote = Note.midi(noteToMidi['E3']); break;
+        case 'KeyV': midiNote = Note.midi(noteToMidi['F3']); break;
+        case 'KeyG': midiNote = Note.midi(noteToMidi['F#3']); break;
+        case 'KeyB': midiNote = Note.midi(noteToMidi['G3']); break;
+        case 'KeyH': midiNote = Note.midi(noteToMidi['G#3']); break;
+        case 'KeyN': midiNote = Note.midi(noteToMidi['A3']); break;
+        case 'KeyJ': midiNote = Note.midi(noteToMidi['A#3']); break;
+        case 'KeyM': midiNote = Note.midi(noteToMidi['B3']); break;
+        case 'KeyQ': midiNote = Note.midi(noteToMidi['C4']); break;
+        case 'Digit2': midiNote = Note.midi(noteToMidi['C#4']); break;
+        case 'KeyW': midiNote = Note.midi(noteToMidi['D4']); break;
+        case 'Digit3': midiNote = Note.midi(noteToMidi['D#4']); break;
+        case 'KeyE': midiNote = Note.midi(noteToMidi['E4']); break;
+        case 'KeyR': midiNote = Note.midi(noteToMidi['F4']); break;
+        case 'Digit5': midiNote = Note.midi(noteToMidi['F#4']); break;
+        case 'KeyT': midiNote = Note.midi(noteToMidi['G4']); break;
+        case 'Digit6': midiNote = Note.midi(noteToMidi['G#4']); break;
+        case 'KeyY': midiNote = Note.midi(noteToMidi['A4']); break;
+        case 'Digit7': midiNote = Note.midi(noteToMidi['A#4']); break;
+        case 'KeyU': midiNote = Note.midi(noteToMidi['B4']); break;
+        case 'KeyI': midiNote = Note.midi(noteToMidi['C5']); break;
+        case 'Digit9': midiNote = Note.midi(noteToMidi['C#5']); break;
+        case 'KeyO': midiNote = Note.midi(noteToMidi['D5']); break;
+        case 'Digit0': midiNote = Note.midi(noteToMidi['D#5']); break;
+        case 'KeyP': midiNote = Note.midi(noteToMidi['E5']); break;
+    }
+    if (midiNote) {
+        if (e.type == 'keydown') {
+            MIDI.noteOn(0, midiNote, 127, 0);
+            showNote(midiNote);
+        } else if (e.type == 'keyup') {
+            MIDI.noteOff(0, midiNote, 0);
+            hideNote(midiNote);
+        }
+    }
+}
+document.addEventListener("keydown", (e) => {keyboardInput(e)});
+document.addEventListener("keyup", (e) => {keyboardInput(e)});

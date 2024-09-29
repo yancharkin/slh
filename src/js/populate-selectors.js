@@ -49,15 +49,10 @@ for (let tempo = 20; tempo < 401; tempo++) {
     tempoSelector.appendChild(option);
 }
 
-let option = document.createElement("option");
-option.setAttribute("value", 1);
-option.innerHTML = "1 repeat";
-option.selected = true;
-repeatsSelector.appendChild(option);
-for (let repeats = 2; repeats < 512; repeats += repeats) {
+for (let repeats = 1; repeats < 512; repeats += repeats) {
     let option = document.createElement("option");
     option.setAttribute("value", repeats);
-    option.innerHTML = repeats + " repeats";
+    option.innerHTML = repeats
     repeatsSelector.appendChild(option);
 }
 

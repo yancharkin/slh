@@ -1,0 +1,7 @@
+{
+    "name": "SLH",
+    "description": "A simple app that may or may not help you compose music.",
+    "version": "0.9.9",
+    "main": "index.js",
+    "author": "Ivan Yancharkin <yancharkin@gmail.com>"
+}

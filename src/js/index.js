@@ -1,4 +1,5 @@
 import { Scale, scale, transpose, Chord } from "tonal";
+import "./ui-update";
 import "./populate-selectors";
 import * as Key from "tonal-key";
 import * as playback from "./playback";
@@ -24,7 +25,6 @@ var rhythmSelector = document.getElementById("rhythm");
 var repeatsSelector = document.getElementById("repeats");
 var playRhythmButton = document.getElementById("play-rhythm");
 var randomizeTrButton = document.getElementById("randomize-tr");
-var randomizeAllButton = document.getElementById("randomize-all");
 var toggleHmButton = document.getElementById("toggle-hm");
 var bodyHm = document.getElementById("body-hm");
 var toggleTrButton = document.getElementById("toggle-tr");
@@ -37,7 +37,6 @@ playScaleButton.addEventListener("click", playScaleClicked);
 playRhythmButton.addEventListener("click", playRhythmClicked);
 randomizeHmButton.addEventListener("click", randomizeHm);
 randomizeTrButton.addEventListener("click", randomizeTr);
-randomizeAllButton.addEventListener("click", randomizeAll);
 toggleHmButton.addEventListener("click", toggleSection);
 toggleTrButton.addEventListener("click", toggleSection);
 
@@ -230,7 +229,7 @@ function playRhythmClicked() {
     let rhythm = rhythmSelector.options[rhythmSelector.selectedIndex].value;
     let tempo = tempoSelector.options[tempoSelector.selectedIndex].value;
     let repeats = repeatsSelector.options[repeatsSelector.selectedIndex].value;
-    playback.playRhythm(rhythm, tempo, repeats);
+    playback.playRhythm(rhythm, tempo, repeats, playRhythmButton);
 }
 
 function toggleSection(button) {
@@ -244,9 +243,11 @@ function toggleSection(button) {
 
     if ((sectionBody.style.display == "block") || (sectionBody.style.display == "")) {
         sectionBody.style.display = "none";
+        button.target.style.backgroundImage = "url('./assets/images/down.svg')";
     }
     else {
         sectionBody.style.display = "block";
+        button.target.style.backgroundImage = "url('./assets/images/up.svg')";
     }
 }
 
@@ -262,16 +263,9 @@ function randomizeHm() {
     tonalScale = scale(scaleName).map(transpose(tonic));
 
     showResult();
-    bodyHm.style.display = "block";
 }
 
 function randomizeTr() {
     randomizeSelction(tempoSelector);
     randomizeSelction(rhythmSelector);
-    bodyTr.style.display = "block";
-}
-
-function randomizeAll() {
-    randomizeHm();
-    randomizeTr();
 }

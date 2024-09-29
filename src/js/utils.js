@@ -56,3 +56,6 @@ export function notesArrayToStr(notes) {
     return notesStr;
 }
 
+export function isElectron() {
+    return navigator.userAgent.toLowerCase().indexOf("electron") > -1;
+}

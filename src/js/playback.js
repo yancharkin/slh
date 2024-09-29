@@ -61,12 +61,13 @@ export function playChord(notes) {
     }
 }
 
-export function playRhythm(rhythm, tempo, repeats) {
+export function playRhythm(rhythm, tempo, repeats, button) {
     var startTime = audioContext.currentTime + 0.100;
     var beatsN = rhythm.split("/")[0];
     var beatValue = rhythm.split("/")[1];
     var noteLength = (60 / tempo) / (beatValue / 4);
-
+    button.disabled = true;
+    setTimeout(() => {button.disabled = false}, noteLength * beatsN * repeats * 1000);
     for (let bar = 0; bar < repeats; bar++) {
         let time = startTime + bar * beatsN * noteLength;
         for (let n = 0; n < beatsN; n++) {
@@ -79,4 +80,3 @@ export function playRhythm(rhythm, tempo, repeats) {
         }
     }
 }
-
