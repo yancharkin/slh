@@ -46,10 +46,11 @@ langSelector.onchange = (e) => {
 };
 
 var isStandalonePWA = !window.matchMedia('(display-mode: browser)').matches && ('windowControlsOverlay' in navigator);
+var isItch = window.location.href.indexOf('itch') != -1;
 let prevScrollTop = document.body.scrollTop || document.documentElement.scrollTop;
 let headerVisibility = 'visible';
 window.onscroll = () => {
-    if (!isStandalonePWA && !utils.isElectron()) {
+    if (!isStandalonePWA && !utils.isElectron() && !isItch) {
         const scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
         const header = document.getElementById('header-main');
         if (scrollTop > prevScrollTop &&  headerVisibility !== 'hidden' && scrollTop > header.clientHeight) {
