@@ -1,6 +1,10 @@
 # Songwriter's Little Helper
-Simple web application created while learning JavaScript and front-end development technologies. Still it can be useful (I hope so).
 
-## Intended usage:
-- click "Randomize"
-- try to compose a song based on the suggested scale, tempo and rhythm
+A simple app that may or may not help you compose music.
+
+[Launch](https://yancharkin.github.io/slh/)
+
+<p align="center">
+    <img src="screenshots/screenshot_00.webp" width="49%">
+    <img src="screenshots/screenshot_01.webp" width="49%">
+</p>
